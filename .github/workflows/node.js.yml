@@ -36,5 +36,5 @@ jobs:
         run: npm run build --if-present
 
       - name: Run Tests
-        run: npm test
+        run: npm run test
         # You could add `--if-present` here if `npm test` is optional: `npm test --if-present`
