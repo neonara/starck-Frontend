@@ -56,6 +56,7 @@ const ApiService = {
   updateUser: (id, userData) => api.patch(`users/usersdetail/${id}/`, userData),
   getClients: () => api.get("users/clients/"),
   getInstallateurs: () => api.get("users/installateurs/"),
+  getTechnicien: () => api.get("users/techniciens/"),
 
 //dashboard
 
@@ -97,7 +98,7 @@ getInstallationStats: () => api.get("statistiques/"),
     deleteInstallation: (id) => api.delete(`installations/supprimer-installation/${id}/`),
     getInstallationById: (id) => api.get(`installations/detail-installation/${id}/`),
     updateInstallation: (id, data) => api.put(`installations/modifier-installation/${id}/`, data),
-    getInstallationStats: () => api.get("installations/statistiques/"),
+    //getInstallationStats: () => api.get("installations/statistiques/"),
 
     
 
@@ -159,6 +160,16 @@ ajouterDonnees: (prodData) => api.post("ajouter_prod/", prodData),
 listeProduction: () => api.get("list_prod/"), 
 statistiquesProduction: (installationId) => api.get(`production/statistiques/${installationId}/`),  // Statistiques pour une installation
 statistiquesGlobales: () => api.get("production/statistiques/globales/"),  // Statistiques globales
+
+
+// Interventions
+getInterventions: (params = {}) => api.get("intervention/interventions/", { params }),
+createIntervention: (data) => api.post("intervention/interventions/creer/", data),
+getInterventionDetail: (id) => api.get(`intervention/interventions/${id}/`),
+updateIntervention: (id, data) => api.put(`intervention/interventions/${id}/modifier/`, data),
+deleteIntervention: (id) => api.delete(`intervention/interventions/${id}/supprimer/`),
+changeInterventionStatus: (id, status) => api.patch(`intervention/interventions/${id}/changer-statut/`, { status }),
+assignTechnicianToIntervention: (id, technicianId) => api.post(`intervention/interventions/${id}/assigner-technicien/`, { technician_id: technicianId }),
 };
 
 export default ApiService;

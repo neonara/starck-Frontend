@@ -25,7 +25,6 @@ const Sidebar = () => {
       children: [
         { label: "Ajout Utilisateur", path: "/user-management" },
         { label: "Utilisateurs", path: "/liste-clients" },
-       
       ]
     },
     {
@@ -44,6 +43,13 @@ const Sidebar = () => {
         { label: "Code Alarme", path: "/ListeCodesAlarmes" },
         { label: "Alarme Active", path: "/ListeAlarmesDeclenchees" },
       ]
+    },
+    {
+      label: "Gestion des interventions", // Nouveau menu
+      icon: Server,
+      children: [
+        { label: "Liste des Interventions", path: "/liste-interventions" },
+      ]
     }
   ];
 
@@ -61,7 +67,7 @@ const Sidebar = () => {
         )}
       </div>
 
-     <div className="pt-6 px-2">
+      <div className="pt-6 px-2">
         <ul className="space-y-2">
           {menuItems.map(({ label, icon: Icon, path, children }) => (
             <li key={label}>
