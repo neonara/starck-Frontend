@@ -37,6 +37,7 @@ import ListeAlarmesDeclenchees from "./components/Alarmes/AlarmesDeclenche/Liste
 import ListeInterventions from "./components/Intervention/ListeInterventions";
 import AjouterInterventionPage from "./components/Intervention/AjouterInterventionPage"; 
 import ModifierInterventionPage from "./components/Intervention/ModifierInterventionPage";
+import DetailleIntervention from "./components/Intervention/DetailleIntervention";
 function App() {
   return (
     <Router>
@@ -68,6 +69,7 @@ function App() {
        <Route path="/liste-interventions" element={<ListeInterventions/>} />
        <Route path="/ajouter-intervention" element={<AjouterInterventionPage />} />
        <Route path="/modifier-intervention/:id" element={<ModifierInterventionPage />} />
+       <Route path="/detaille-intervention/:id" element={<DetailleIntervention />} />
        </Route>
   </Routes>
 </Router>

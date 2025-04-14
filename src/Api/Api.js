@@ -169,7 +169,6 @@ getInterventionDetail: (id) => api.get(`intervention/interventions/${id}/`),
 updateIntervention: (id, data) => api.put(`intervention/interventions/${id}/modifier/`, data),
 deleteIntervention: (id) => api.delete(`intervention/interventions/${id}/supprimer/`),
 changeInterventionStatus: (id, status) => api.patch(`intervention/interventions/${id}/changer-statut/`, { status }),
-assignTechnicianToIntervention: (id, technicianId) => api.post(`intervention/interventions/${id}/assigner-technicien/`, { technician_id: technicianId }),
 };
 
 export default ApiService;

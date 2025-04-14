@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../../Api/Api';
 import toast, { Toaster } from 'react-hot-toast';
-import { label } from 'three/tsl';
+import { Calendar, ClipboardList, UserCog, Zap } from 'lucide-react';
 
 const AjouterInterventionPage = () => {
   const navigate = useNavigate();
@@ -15,13 +15,13 @@ const AjouterInterventionPage = () => {
     statut: '',
     description: ''
   });
-  const statutOptions = [
-    { value: 'en_attente', label:'En attente'},
-    { value: 'en_cours', label:'En cours'},
-    { value: 'terminee', label:'Terminée'},
-    { value: 'annulee', label:'Annulée'},
 
-  ]
+  const statutOptions = [
+    { value: 'en_attente', label: 'En attente' },
+    { value: 'en_cours', label: 'En cours' },
+    { value: 'terminee', label: 'Terminée' },
+    { value: 'annulee', label: 'Annulée' },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,30 +30,18 @@ const AjouterInterventionPage = () => {
           ApiService.getInstallations(),
           ApiService.getTechnicien()
         ]);
-
-        const installationsList = installationsRes.data?.results || installationsRes.data || [];
-        setInstallations(installationsList);
-
-        const techniciensList = techniciensRes.data?.results || techniciensRes.data || [];
-        setTechniciens(techniciensList);
-
-        console.log('Installations chargées:', installationsList);
-        console.log('Techniciens chargés:', techniciensList);
-
+        setInstallations(installationsRes.data?.results || installationsRes.data || []);
+        setTechniciens(techniciensRes.data?.results || techniciensRes.data || []);
       } catch (err) {
         console.error("Erreur lors du chargement des données:", err);
         toast.error("Erreur lors du chargement des données ❌");
-        setInstallations([]);
-        setTechniciens([]);
       }
     };
-
     fetchData();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     try {
       if (!formData.statut) {
         throw new Error('Veuillez sélectionner un statut');
@@ -67,36 +55,23 @@ const AjouterInterventionPage = () => {
         description: formData.description || 'Aucune description'
       };
 
-      console.log('Données à envoyer:', interventionData);
-
       const response = await ApiService.createIntervention(interventionData);
-      console.log('Réponse du serveur:', response);
-      
       toast.success("Intervention créée avec succès ✅");
       navigate('/liste-interventions');
     } catch (err) {
-      console.error("Erreur lors de la création:", err);
-      
-      if (err.message && !err.response) {
-        toast.error(err.message);
-        return;
-      }
-
       const errorDetails = err.response?.data;
-      console.log("Détails de l'erreur:", errorDetails);
-      
       let errorMessage;
       if (typeof errorDetails === 'object') {
         errorMessage = Object.entries(errorDetails)
           .map(([key, value]) => `${key}: ${value}`)
           .join('\n');
       } else {
-        errorMessage = errorDetails?.message || err.message || "Erreur lors de la création de l'intervention";
+        errorMessage = errorDetails?.message || err.message || "Erreur lors de la création";
       }
-      
       toast.error(`Erreur: ${errorMessage} ❌`);
     }
-};
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -106,107 +81,107 @@ const AjouterInterventionPage = () => {
   };
 
   return (
-    <div className="pt-24 px-6">
+    <div className="pt-24 px-4 md:px-10">
       <Toaster position="top-right" />
-      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow p-6">
-        <h1 className="text-2xl font-bold mb-6">Nouvelle Intervention</h1>
-        
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 border">
+        <h1 className="text-3xl font-bold text-blue-600 mb-8 flex items-center gap-2">
+          <ClipboardList className="w-7 h-7" /> Ajouter une nouvelle intervention
+        </h1>
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Installation</label>
-            <select
-              name="installation"
-              value={formData.installation}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-              required
-            >
-              <option value="">Sélectionner une installation</option>
-              {installations.map(install => (
-                <option key={install.id} value={install.id}>
-                  {install.nom}
-                </option>
-              ))}
-            </select>
-          </div>
+  {[
+    {
+      label: "Installation",
+      name: "installation",
+      type: "select",
+      options: installations.map(install => ({
+        value: install.id,
+        label: install.nom,
+      })),
+    },
+    {
+      label: "Technicien",
+      name: "technicien",
+      type: "select",
+      options: techniciens.map(tech => ({
+        value: tech.id,
+        label: `${tech.first_name || ''} ${tech.last_name || ''}`.trim() || tech.email || 'Technicien sans nom',
+      })),
+    },
+    {
+      label: "Date prévue",
+      name: "date_prevue",
+      type: "date",
+    },
+    {
+      label: "Statut",
+      name: "statut",
+      type: "select",
+      options: statutOptions,
+    },
+    {
+      label: "Description",
+      name: "description",
+      type: "textarea",
+    }
+  ].map((field, index) => (
+    <div key={index} className="grid grid-cols-3 items-center gap-4">
+      <label className="text-sm font-medium text-gray-700">{field.label}</label>
+      {field.type === "select" ? (
+        <select
+          name={field.name}
+          value={formData[field.name]}
+          onChange={handleChange}
+          className="col-span-2 block w-full rounded-md border border-gray-300 p-2 text-gray-700"
+          required
+        >
+          <option value="">Sélectionner {field.label.toLowerCase()}</option>
+          {field.options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      ) : field.type === "textarea" ? (
+        <textarea
+          name={field.name}
+          value={formData[field.name]}
+          onChange={handleChange}
+          rows="4"
+          placeholder={`Entrer ${field.label.toLowerCase()}`}
+          className="col-span-2 block w-full rounded-md border border-gray-300 p-2 text-gray-700"
+          required
+        />
+      ) : (
+        <input
+          type={field.type}
+          name={field.name}
+          value={formData[field.name]}
+          onChange={handleChange}
+          className="col-span-2 block w-full rounded-md border border-gray-300 p-2 text-gray-700"
+          required
+        />
+      )}
+    </div>
+  ))}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Technicien</label>
-            <select
-              name="technicien"
-              value={formData.technicien}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-              required
-            >
-              <option value="">Sélectionner un technicien</option>
-              {techniciens.map(tech => (
-                <option key={tech.id} value={tech.id}>
-                  {`${tech.first_name || ''} ${tech.last_name || ''}`.trim() || tech.email || 'Technicien sans nom'}
-                </option>
-              ))}
-            </select>
-          </div>
+  <div className="flex justify-end gap-4 pt-6">
+    <button
+      type="submit"
+      className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
+    >
+      Enregistrer
+    </button>
+    <button
+      type="button"
+      onClick={() => navigate('/liste-interventions')}
+      className="bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition"
+    >
+      Annuler
+    </button>
+  </div>
+</form>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Date prévue</label>
-            <input
-              type="date"
-              name="date_prevue"
-              value={formData.date_prevue}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Statut</label>
-            <select
-              name="statut"
-              value={formData.statut}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-              required
-            >
-              <option value="">Sélectionner un statut</option>
-              {statutOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              rows="4"
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2"
-              required
-              placeholder="Description de l'intervention"
-            />
-          </div>
-
-          <div className="flex gap-4 pt-4">
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
-              Enregistrer
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/liste-interventions')}
-              className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
-            >
-              Annuler
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );
