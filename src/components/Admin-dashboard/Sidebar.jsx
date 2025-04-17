@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
-  LayoutGrid, Users, Server, ChevronLeft, ChevronRight
+  LayoutGrid, Users, Server, ChevronLeft, ChevronRight, CalendarCheck
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -45,12 +45,32 @@ const Sidebar = () => {
       ]
     },
     {
-      label: "Gestion des interventions", // Nouveau menu
+      label: "Gestion des interventions", 
       icon: Server,
       children: [
         { label: "Liste des Interventions", path: "/liste-interventions" },
       ]
+    },
+
+    {
+      label: "Gestion des Entretiens",
+      icon: CalendarCheck,
+      children: [
+        { label: "Liste des Entretiens", path: "/liste-entretiens" },
+        { label: "Calendrier des Entretiens", path: "/calendrier-entretiens" },
+        { label: "Statistiques des Entretiens", path: "/statistiques-entretiens" },
+      ]
+    },
+
+    {
+      label: "Reclamations",
+      icon: CalendarCheck,
+      children: [
+        { label: "Liste des reclamations", path: "/list_reclamations" },
+
+      ]
     }
+
   ];
 
   return (

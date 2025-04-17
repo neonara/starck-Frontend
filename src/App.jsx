@@ -35,9 +35,21 @@ import ListeAlarmesDeclenchees from "./components/Alarmes/AlarmesDeclenche/Liste
 
 //intervention
 import ListeInterventions from "./components/Intervention/ListeInterventions";
+
 import AjouterInterventionPage from "./components/Intervention/AjouterInterventionPage"; 
 import ModifierInterventionPage from "./components/Intervention/ModifierInterventionPage";
 import DetailleIntervention from "./components/Intervention/DetailleIntervention";
+//entretien
+import ListeEntretiensPage from "./components/Entretien/ListeEntretiensPage";
+import FormulaireEntretien from "./components/Entretien/FormulaireEntretien";
+import EntretienDetailModal from "./components/Entretien/EtretienDetailModal";
+import ModifierEntretienPage from "./components/Entretien/ModifierEntretienPage";
+import CalendrierEntretiens from "./components/Entretien/CalendrierEntretiens";
+import StatistiquesEntretiens from "./components/Entretien/StatistiquesEntretiens";
+
+//Reclamations
+import ListeReclamationsPage from "./components/Reclamation/ListeReclamationPage";
+import ModifierReclamationPage from "./components/Reclamation/ModifierReclamationPage";
 function App() {
   return (
     <Router>
@@ -70,6 +82,18 @@ function App() {
        <Route path="/ajouter-intervention" element={<AjouterInterventionPage />} />
        <Route path="/modifier-intervention/:id" element={<ModifierInterventionPage />} />
        <Route path="/detaille-intervention/:id" element={<DetailleIntervention />} />
+       
+
+       <Route path="/liste-entretiens" element={<ListeEntretiensPage />} />
+       <Route path="/ajouter-entretien" element={<FormulaireEntretien />} />
+       <Route path="/details-entretien/:id" element={<EntretienDetailModal />} />
+       <Route path="/modifier-entretien/:id" element={<ModifierEntretienPage />} />
+       <Route path="/calendrier-entretiens" element={<CalendrierEntretiens />} />
+       <Route path="/statistiques-entretiens" element={<StatistiquesEntretiens />} />
+
+
+       <Route path="/list_reclamations" element={<ListeReclamationsPage />} />
+       <Route path="/reclamations/:id/edit" element={<ModifierReclamationPage />} />
        </Route>
   </Routes>
 </Router>

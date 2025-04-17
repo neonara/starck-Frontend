@@ -169,6 +169,20 @@ getInterventionDetail: (id) => api.get(`intervention/interventions/${id}/`),
 updateIntervention: (id, data) => api.put(`intervention/interventions/${id}/modifier/`, data),
 deleteIntervention: (id) => api.delete(`intervention/interventions/${id}/supprimer/`),
 changeInterventionStatus: (id, status) => api.patch(`intervention/interventions/${id}/changer-statut/`, { status }),
+
+//Entretien
+getAllEntretiens: (params = {}) => api.get("entretien/entretiens/", { params }),
+createEntretien: (data) => api.post("entretien/entretiens/", data),
+getEntretien: (id) => api.get(`entretien/entretiens/${id}/`),
+updateEntretien: (id, data) => api.put(`entretien/entretiens/${id}/`, data),
+deleteEntretien: (id) => api.delete(`entretien/entretiens/${id}/`),
+getEntretienCalendar: (params) => api.get("entretien/entretiens/calendar/", { params }),
+getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
+
+//Reclamation
+getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
+updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),
+
 };
 
 export default ApiService;
