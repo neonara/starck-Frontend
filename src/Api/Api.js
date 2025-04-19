@@ -183,6 +183,33 @@ getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
 updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),
 
+//Rapports
+rapports: {
+  getRapportProductionMensuelle: (installationId, mois) =>
+    api.get(`rapports/rapports/production-mensuelle/?installation_id=${installationId}&mois=${mois}`),
+ 
+  exportRapportProduction: (params) =>
+    api.post("rapports/rapports/export-production/", params),
+
+  exportRapportProductionPDF: (params) =>
+    api.post("rapports/rapports/export-production-pdf/", params, {
+      responseType: "blob",
+    }),
+
+  getRapportConsommationMensuelle: (installationId, mois) =>
+    api.get(`rapports/rapports/consommation-mensuelle/?installation_id=${installationId}&mois=${mois}`),
+  
+  exportRapportConsommation: (params) =>
+    api.post("rapports/rapports/export-consommation/", params, {
+      responseType: "blob",
+    }),
+
+  exportRapportConsommationPDF: (params) =>
+    api.post("rapports/rapports/export-consommation-pdf/", params, {
+      responseType: "blob",
+    }),
+},
+
 };
 
 export default ApiService;

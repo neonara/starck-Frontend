@@ -69,7 +69,17 @@ const Sidebar = () => {
         { label: "Liste des reclamations", path: "/list_reclamations" },
 
       ]
-    }
+    },
+
+    {
+      label: "Rapports",
+      icon: CalendarCheck,
+      children: [
+        { label: "Rapport de production", path: "/rapport_production" },
+        { label: "Rapport de consommation", path: "/rapport_consommation" },
+
+      ]
+    },
 
   ];
 

@@ -50,6 +50,10 @@ import StatistiquesEntretiens from "./components/Entretien/StatistiquesEntretien
 //Reclamations
 import ListeReclamationsPage from "./components/Reclamation/ListeReclamationPage";
 import ModifierReclamationPage from "./components/Reclamation/ModifierReclamationPage";
+
+//Rapports
+import RapportProductionPage from "./components/Rapports/RapportProductionPage";
+import RapportConsommationPage from"./components/Rapports/RapportConsommationPage";
 function App() {
   return (
     <Router>
@@ -94,6 +98,10 @@ function App() {
 
        <Route path="/list_reclamations" element={<ListeReclamationsPage />} />
        <Route path="/reclamations/:id/edit" element={<ModifierReclamationPage />} />
+       
+       
+       <Route path="/rapport_production" element={<RapportProductionPage />} />
+       <Route path="/rapport_consommation" element={<RapportConsommationPage />} />
        </Route>
   </Routes>
 </Router>
