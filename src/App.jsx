@@ -3,6 +3,8 @@ import AppLayout from './components/layout/AppLayout';
 import './App.css'
 import "flowbite";
 import "./index.css";
+import 'leaflet/dist/leaflet.css';
+
 
 // Authentification
 import RegisterAdmin from "./components/Authentification/RegisterAdmin";
@@ -16,6 +18,7 @@ import UpdateProfile from './components/Authentification/UpdateProfile';
 
 // Admin 
 import Dashboard from './components/Admin-dashboard/Dashboard';
+import ClientDashboard from"./components/Client-dashboard/ClientDashboard";
 
 //Insttalation
 import ListeInstallationPage from "./components/Installations/liste-installations";
@@ -65,6 +68,9 @@ function App() {
     <Route path="/" element={<AppLayout />}>
       
       <Route path="admin-dashboard" element={<Dashboard />} />
+      <Route path="client-dashboard" element={<ClientDashboard />} />
+
+      
       <Route path="user-management" element={<UserManagement />} />
       <Route path="update-profile" element={<UpdateProfile />} />
       <Route path="liste-installations" element={<ListeInstallationPage />} />

@@ -47,6 +47,7 @@ api.interceptors.request.use(async (req) => {
 
 const ApiService = {
   // Utilisateur
+  
   addUser: (userData) => api.post("users/register/", userData),
   getProfile: () => api.get("users/profile/"),
   updateProfile: (userData) => api.patch("users/update-profile/", userData),
@@ -97,8 +98,13 @@ getInstallationStats: () => api.get("statistiques/"),
     getInstallations: (params = {}) => api.get("installations/installations/", { params }),
     deleteInstallation: (id) => api.delete(`installations/supprimer-installation/${id}/`),
     getInstallationById: (id) => api.get(`installations/detail-installation/${id}/`),
-    updateInstallation: (id, data) => api.put(`installations/modifier-installation/${id}/`, data),
-    //getInstallationStats: () => api.get("installations/statistiques/"),
+    updateInstallation: (id, data) =>
+      api.put(`installations/modifier-installation/${id}/`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+        //getInstallationStats: () => api.get("installations/statistiques/"),
 
     
 
@@ -183,6 +189,13 @@ getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
 updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),
 
+//client
+getInstallationClient:(params = {}) => api.get("installations/installation-client/", { params }),
+statistiquesInstallationClient: () => api.get("production/statistiques-installation-client/"),
+getStatistiquesAlarmesClient: () => api.get("alarme/stats-client/"),
+
+
+
 //Rapports
 rapports: {
   getRapportProductionMensuelle: (installationId, mois) =>
@@ -209,6 +222,7 @@ rapports: {
       responseType: "blob",
     }),
 },
+
 
 };
 
