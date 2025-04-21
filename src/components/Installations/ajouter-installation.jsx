@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import ApiService from "../../Api/Api";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-import { geocodeAdresse } from "../utils/geocode"; // adapter le chemin
-import { useNavigate } from 'react-router-dom';
+import { geocodeAdresse } from "../utils/geocode"; 
 
 
 const sectionTitle = "text-xl font-semibold text-gray-800 mb-4 flex justify-between items-center";
