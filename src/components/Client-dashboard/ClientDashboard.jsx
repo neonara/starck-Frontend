@@ -108,12 +108,19 @@ const ClientDashboard = () => {
         )}
         <div>
           <h2 className="text-lg font-semibold text-gray-700">{data.nom}</h2>
-          <p className="text-sm text-gray-500">
-            État :
-            <span className={`ml-2 font-semibold ${data.etat === 'active' ? 'text-green-600' : 'text-red-600'}`}>
-              {data.etat === 'active' ? 'Fonctionnelle' : 'Défaut détecté'}
-            </span>
-          </p>
+          <p className="text-sm text-gray-500 flex items-center gap-2">
+  État :
+  <span
+    className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+      data.etat_fonctionnement === "Fonctionnelle"
+        ? "bg-green-100 text-green-600"
+        : "bg-red-100 text-red-600"
+    }`}
+  >
+    {data.etat_fonctionnement}
+  </span>
+</p>
+
           <p className="text-sm text-gray-400">Dernier contrôle : {data.dernier_controle ? dayjs(data.dernier_controle).format("DD MMM YYYY") : "—"}</p>
           <p className="text-sm text-gray-400">Prochaine visite : {data.prochaine_visite ? dayjs(data.prochaine_visite).format("DD MMM YYYY") : "—"}</p>
         </div>
