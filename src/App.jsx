@@ -53,10 +53,13 @@ import StatistiquesEntretiens from "./components/Entretien/StatistiquesEntretien
 //Reclamations
 import ListeReclamationsPage from "./components/Reclamation/ListeReclamationPage";
 import ModifierReclamationPage from "./components/Reclamation/ModifierReclamationPage";
+import ReclamationClient from "./components/Client-dashboard/ReclamationClient";
 
 //Rapports
 import RapportProductionPage from "./components/Rapports/RapportProductionPage";
 import RapportConsommationPage from"./components/Rapports/RapportConsommationPage";
+import InstallationMap from "./components/Installations/InstallationMap";
+import HistoriqueReclamationsClient from "./components/Client-dashboard/HistoriqueReclamationsClient";
 function App() {
   return (
     <Router>
@@ -87,6 +90,8 @@ function App() {
        <Route path="/codes-alarmes/ajouter" element={<AjouterCodeAlarmePage />} />
        <Route path="/ListeAlarmesDeclenchees" element={<ListeAlarmesDeclenchees/>} />
        
+       <Route path="/installationMap" element={<InstallationMap/>} />
+
        
        <Route path="/liste-interventions" element={<ListeInterventions/>} />
        <Route path="/ajouter-intervention" element={<AjouterInterventionPage />} />
@@ -108,6 +113,12 @@ function App() {
        
        <Route path="/rapport_production" element={<RapportProductionPage />} />
        <Route path="/rapport_consommation" element={<RapportConsommationPage />} />
+       
+       
+       <Route path="/client-reclamations" element={<ReclamationClient />} />
+       <Route path="/liste-reclamations" element={<HistoriqueReclamationsClient />} />
+       
+       
        </Route>
   </Routes>
 </Router>

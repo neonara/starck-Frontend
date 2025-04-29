@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import {
 
-  LayoutGrid, Users, Server, ChevronLeft, ChevronRight, CalendarCheck
+  LayoutGrid, Users, Server, ChevronLeft, ChevronRight, CalendarCheck, Zap, AlertCircle, BarChart3
 
 } from 'lucide-react';
 
@@ -156,76 +156,41 @@ const Sidebar = () => {
   // 👤 Menu pour les clients
 
   const clientMenuItems = [
-
     {
-
       label: "Mon tableau de bord",
-
-      icon: LayoutGrid,
-
+      icon: LayoutGrid, 
       path: "/client-dashboard",
-
     },
 
     {
-
-      label: "Ma production",
-
-      icon: Server,
-
-      children: [
-
-        { label: "Journalière", path: "/client-prod-journalier" },
-
-        { label: "Mensuelle", path: "/client-prod-mensuelle" },
-
-        { label: "Totale", path: "/client-prod-totale" },
-
-      ],
-
-    },
-
-    {
-
-      label: "Ma consommation",
-
-      icon: Server,
-
-      children: [
-
-        { label: "Consommation Totale", path: "/client-consommation" },
-
-      ],
-
-    },
-
-    {
-
-      label: "Mes équipements",
-
-      icon: Server,
-
-      path: "/client-equipements",
-
-    },
-
-    {
-
-      label: "Réclamations",
-
+      label: "Mes interventions",
       icon: CalendarCheck,
-
-      children: [
-
-        { label: "Mes réclamations", path: "/client-reclamations" },
-
-      ],
-
+      path: "/client-mes-interventions",
     },
-
+    {
+      label: "Mes entretiens",
+      icon: CalendarCheck,
+      path: "/client-mes-entretien",
+    },
+    {
+      label: "Réclamations",
+      icon: AlertCircle,
+      children: [
+        { label: "Créer réclamations", path: "/client-reclamations" },
+        { label: "Mes réclamations", path: "/liste-reclamations" },
+      ],
+    },
+    {
+      label: "Rapports",
+      icon: BarChart3,
+      children: [
+        { label: "Rapport de production", path: "/rapport_production_client" },
+        { label: "Rapport de consommation", path: "/rapport_consommation_client" },
+      ],
+    },
   ];
+  
  
-  // 💡 Choisir le bon menu selon le rôle
 
   const menuItems = userRole === "client" ? clientMenuItems : adminMenuItems;
  

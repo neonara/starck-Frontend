@@ -107,6 +107,9 @@ getInstallationStats: () => api.get("statistiques/"),
         //getInstallationStats: () => api.get("installations/statistiques/"),
 
     
+    updateInstallation: (id, data) => api.put(`installations/modifier-installation/${id}/`, data),
+    getInstallationStats: () => api.get("installations/statistiques/"),
+    getInstallationsGeoData: () => api.get("installations/geodata/"),
 
   // Notifications
   getNotifications: () => api.get("notification/get-my-notifications/"),
@@ -138,10 +141,9 @@ supprimerAlarmeDeclenchee: (id) =>
 
 
 
-getStatistiquesAlarmes: () =>
-  api.get("alarme/stats/"),
+getStatistiquesAlarmes: (id) => api.get(`alarme/stats/${id}/`),
 
-
+getStatistiquesAlarmesglobale: () => api.get(`alarme/stats/`),
 
   // Historique
   exportHistorique: {
@@ -188,6 +190,9 @@ getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
 //Reclamation
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
 updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),
+envoyerReclamation: (data) => api.post("reclamation/reclamations/envoyer/", data),
+getMesReclamations: () => api.get("reclamation/mes-reclamations/"),
+
 
 //client
 getInstallationClient:(params = {}) => api.get("installations/installation-client/", { params }),
