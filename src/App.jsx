@@ -64,6 +64,10 @@ import RapportAlarmesPage from "./components/Rapports/RapportAlarmesPage";
 import RapportProductionClientPage from "./components/Rapports/RapportProductionClientPage";
 import RapportConsommationClientPage from "./components/Rapports/RapportConsommationClientPage";
 import RapportAlarmesClientPage from "./components/Rapports/RapportAlarmesClientPage";
+import ListeInterventionsClient from "./components/Intervention/ListeInterventionsClient";
+import DetailleInterventionClient from "./components/Intervention/DetailleInterventionClient";
+import ListeEntretiensClient from "./components/Entretien/ListeEntretiensClient";
+import DetailleEntretienClient from "./components/Entretien/DetailleEntretienClient";
 function App() {
   return (
     <Router>
@@ -126,8 +130,16 @@ function App() {
        
        <Route path="/rapports-production" element={<RapportProductionClientPage />} />
        <Route path="/rapports-consommation" element={<RapportConsommationClientPage />} />
-       <Route path="//rapports-alarme" element={<RapportAlarmesClientPage />} />
+       <Route path="/rapports-alarme" element={<RapportAlarmesClientPage />} />
        
+       
+       <Route path="/client-mes-interventions" element={<ListeInterventionsClient />} />
+       <Route path="/client/details-interventions/:id" element={<DetailleInterventionClient />} />
+       
+       
+       <Route path="/client-mes-entretien" element={<ListeEntretiensClient />} />
+       <Route path="/client/entretiens/:id" element={<DetailleEntretienClient />} />
+
        
        </Route>
   </Routes>

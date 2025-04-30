@@ -177,6 +177,14 @@ getInterventionDetail: (id) => api.get(`intervention/interventions/${id}/`),
 updateIntervention: (id, data) => api.put(`intervention/interventions/${id}/modifier/`, data),
 deleteIntervention: (id) => api.delete(`intervention/interventions/${id}/supprimer/`),
 changeInterventionStatus: (id, status) => api.patch(`intervention/interventions/${id}/changer-statut/`, { status }),
+getInterventionsClient: () => {
+  return api.get("intervention/client/interventions/");
+},
+getInterventionDetailClient: (id) => {
+  return api.get(`intervention/client/interventions/${id}/`);
+},
+
+
 
 //Entretien
 getAllEntretiens: (params = {}) => api.get("entretien/entretiens/", { params }),
@@ -186,7 +194,12 @@ updateEntretien: (id, data) => api.put(`entretien/entretiens/${id}/`, data),
 deleteEntretien: (id) => api.delete(`entretien/entretiens/${id}/`),
 getEntretienCalendar: (params) => api.get("entretien/entretiens/calendar/", { params }),
 getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
-
+getEntretiensClient: () => {
+  return api.get("entretien/client/entretiens/");
+},
+getEntretienDetail: (id) => {
+  return api.get(`entretien/client/entretiens/${id}/`);
+},
 //Reclamation
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
 updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),
