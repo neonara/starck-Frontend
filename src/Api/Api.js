@@ -186,10 +186,19 @@ updateEntretien: (id, data) => api.put(`entretien/entretiens/${id}/`, data),
 deleteEntretien: (id) => api.delete(`entretien/entretiens/${id}/`),
 getEntretienCalendar: (params) => api.get("entretien/entretiens/calendar/", { params }),
 getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
+//technicien
+//entretien
+ajouterRappelEntretien: (entretienId, rappel_datetime) =>
+  api.post(`entretien/entretiens/${entretienId}/rappel/`, { rappel_datetime }),
+getMesEntretiens: () => api.get("entretien/entretiens/mes-entretiens/"),
+
 
 //Reclamation
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
 updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),
+envoyerReclamation: (data) => api.post("reclamation/reclamations/envoyer/", data),
+getMesReclamations: () => api.get("reclamation/mes-reclamations/"),
+
 
 //client
 getInstallationClient:(params = {}) => api.get("installations/installation-client/", { params }),
@@ -225,6 +234,14 @@ rapports: {
     }),
 },
 
+//Installateur
+getMyClients: () => api.get("users/myclients/"),
+getInstallationsByInstallateur: () => api.get("installations/mes-installations/"),
+getInstallationsGeoDataInstallateur: () => api.get("installations/mes-installations-geo/"),
+getMesInterventions: (params) => api.get("intervention/interventions/mes-interventions/", { params }),
+getMesEntretiensInstallateur: () => api.get("entretien/entretiens/mes-entretiens-installateur/"),
+getCalendarEntretiensInstallateur: (params) => api.get("entretien/entretiens/calendar-installateur/", { params }),
+getAlarmesInstallateur: () => api.get("alarme/liste/installateur/"),
 
 };
 
