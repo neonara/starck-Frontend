@@ -147,6 +147,8 @@ const Sidebar = () => {
 
         { label: "Rapport de consommation", path: "/rapport_consommation" },
 
+        { label: "Rapports d’historique des alarmes", path: "/rapport_alarme" },
+
       ]
 
     },
@@ -163,16 +165,6 @@ const Sidebar = () => {
     },
 
     {
-      label: "Mes interventions",
-      icon: CalendarCheck,
-      path: "/client-mes-interventions",
-    },
-    {
-      label: "Mes entretiens",
-      icon: CalendarCheck,
-      path: "/client-mes-entretien",
-    },
-    {
       label: "Réclamations",
       icon: AlertCircle,
       children: [
@@ -184,8 +176,9 @@ const Sidebar = () => {
       label: "Rapports",
       icon: BarChart3,
       children: [
-        { label: "Rapport de production", path: "/rapport_production_client" },
-        { label: "Rapport de consommation", path: "/rapport_consommation_client" },
+        { label: "Rapport Production", path: "/rapports-production" },
+        { label: "Rapport Consommation", path: "/rapports-consommation" },
+        { label: "Rapport Historique Alarme", path: "/rapports-alarme" },
       ],
     },
   ];
