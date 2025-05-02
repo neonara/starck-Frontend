@@ -194,12 +194,7 @@ updateEntretien: (id, data) => api.put(`entretien/entretiens/${id}/`, data),
 deleteEntretien: (id) => api.delete(`entretien/entretiens/${id}/`),
 getEntretienCalendar: (params) => api.get("entretien/entretiens/calendar/", { params }),
 getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
-getEntretiensClient: () => {
-  return api.get("entretien/client/entretiens/");
-},
-getEntretienDetail: (id) => {
-  return api.get(`entretien/client/entretiens/${id}/`);
-},
+
 //Reclamation
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
 updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),

@@ -169,11 +169,7 @@ const Sidebar = () => {
       icon: CalendarCheck,
       path: "/client-mes-interventions",
     },
-    {
-      label: "Mes entretiens",
-      icon: CalendarCheck,
-      path: "/client-mes-entretien",
-    },
+   
     {
       label: "Réclamations",
       icon: AlertCircle,

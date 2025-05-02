@@ -137,8 +137,6 @@ function App() {
        <Route path="/client/details-interventions/:id" element={<DetailleInterventionClient />} />
        
        
-       <Route path="/client-mes-entretien" element={<ListeEntretiensClient />} />
-       <Route path="/client/entretiens/:id" element={<DetailleEntretienClient />} />
 
        
        </Route>
