@@ -66,8 +66,7 @@ import RapportConsommationClientPage from "./components/Rapports/RapportConsomma
 import RapportAlarmesClientPage from "./components/Rapports/RapportAlarmesClientPage";
 import ListeInterventionsClient from "./components/Intervention/ListeInterventionsClient";
 import DetailleInterventionClient from "./components/Intervention/DetailleInterventionClient";
-import ListeEntretiensClient from "./components/Entretien/ListeEntretiensClient";
-import DetailleEntretienClient from "./components/Entretien/DetailleEntretienClient";
+
 function App() {
   return (
     <Router>
@@ -137,6 +136,7 @@ function App() {
        <Route path="/client/details-interventions/:id" element={<DetailleInterventionClient />} />
        
        
+
 
        
        </Route>
