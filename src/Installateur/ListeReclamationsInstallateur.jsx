@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ApiService from "../../Api/Api";
+import ApiService from "../Api/Api";
 import {
   useReactTable,
   getCoreRowModel,
@@ -20,7 +20,7 @@ const statusColors = {
   resolu: "bg-green-100 text-green-700",
 };
  
-const ListeReclamationsPage = () => {
+const ListeReclamationsInstallateur = () => {
   const [data, setData] = useState([]);
   const [pageSize, setPageSize] = useState(5);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -30,16 +30,15 @@ const ListeReclamationsPage = () => {
   const navigate = useNavigate();
  
   useEffect(() => {
-    const fetchReclamations = async () => {
+    const fetch = async () => {
       try {
-        const res = await ApiService.getReclamations();
-        setData(Array.isArray(res.data) ? res.data : res.data.results || []);
-      } catch (err) {
-        console.error("Erreur lors du chargement des réclamations", err);
-        toast.error("Erreur de chargement ❌");
+        const res = await ApiService.getReclamationsInstallateur();
+        setData(res.data.results || res.data); 
+      } catch {
+        toast.error("Erreur lors du chargement ❌");
       }
     };
-    fetchReclamations();
+    fetch();
   }, []);
  
   const handleStatusUpdate = async () => {
@@ -262,4 +261,4 @@ const ListeReclamationsPage = () => {
   );
 };
  
-export default ListeReclamationsPage;
+export default ListeReclamationsInstallateur;

@@ -67,6 +67,17 @@ import RapportAlarmesClientPage from "./components/Rapports/RapportAlarmesClient
 import ListeInterventionsClient from "./components/Intervention/ListeInterventionsClient";
 import DetailleInterventionClient from "./components/Intervention/DetailleInterventionClient";
 
+//Technicien 
+import MesEntretiens from "./components/Utilisateurs/Technicien/MesEntretiens";
+//Installateur
+import ListeUtilisateursPage from "./Installateur/ListeUtilisateursPage";
+import ListeMesInstallationsPage from "./Installateur/ListeMesInstallationsPage.jsx";
+import InstallationMapInstallateur from "./Installateur/InstallationMapInstallateur.jsx";
+import ListeMesInterventionsPage from "./Installateur/ListeMesInterventionsPage.jsx";
+import ListeMesEntretiensInstallateurPage from "./Installateur/ListeMesEntretiensInstallateur.jsx";
+import CalendrierEntretiensInstallateur from "./Installateur/CalendrierEntretiensInstallateur.jsx";
+import ListeAlarmesInstallateur from "./Installateur/ListeAlarmesInstallateur.jsx";
+import ListeReclamationsInstallateur from "./Installateur/ListeReclamationsInstallateur.jsx";
 function App() {
   return (
     <Router>
@@ -96,6 +107,9 @@ function App() {
        <Route path="/ListeCodesAlarmes" element={<ListeCodesAlarmes/>}/>
        <Route path="/codes-alarmes/ajouter" element={<AjouterCodeAlarmePage />} />
        <Route path="/ListeAlarmesDeclenchees" element={<ListeAlarmesDeclenchees/>} />
+       
+       <Route path="/installationMap" element={<InstallationMap/>} />
+
        
        <Route path="/installationMap" element={<InstallationMap/>} />
 
@@ -139,6 +153,23 @@ function App() {
 
 
        
+       <Route path="//rapports-alarme" element={<RapportAlarmesClientPage />} />
+       
+       
+       <Route path="/MesEntretiens" element={<MesEntretiens />} />
+       <Route path="/ListeUtilisateurs" element={<ListeUtilisateursPage />} />
+       <Route path="/MesInstallation" element={<ListeMesInstallationsPage />} />
+       
+       <Route path="/MapInstallateur" element={<InstallationMapInstallateur />} />
+       
+       <Route path="/Mesintervention" element={<ListeMesInterventionsPage />} />
+       <Route path="/MesEntrentientinstallateur" element={<ListeMesEntretiensInstallateurPage/>} />
+       <Route path="/Calendrier-En-Insta" element={<CalendrierEntretiensInstallateur/>} />
+       <Route path="/ListeAlarmesInstallateur" element={<ListeAlarmesInstallateur/>} />
+       
+       <Route path="/ListeReclamationsInstallateur" element={<ListeReclamationsInstallateur/>} />
+       
+
        </Route>
   </Routes>
 </Router>
