@@ -273,6 +273,8 @@ getReclamationsInstallateur: () =>api.get("reclamation/reclamations/installateur
 getStatistiquesAlarmesInstallateur: () =>api.get("alarme/statistiques-installateur/"),
 
 getInstallationsByInstallateur: () =>api.get("installations/mes-installations/"),
+getStatistiquesInstallateurProduction: () => api.get("production/statistiques-installateur/"),
+
 };
 
 export default ApiService;
