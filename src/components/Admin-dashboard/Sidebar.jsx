@@ -97,6 +97,12 @@ const Sidebar = () => {
     },
  
     {
+      label: "Mes interventions",
+      icon: CalendarCheck,
+      path: "/client-mes-interventions",
+    },
+   
+    {
       label: "Réclamations",
       icon: AlertCircle,
       children: [
