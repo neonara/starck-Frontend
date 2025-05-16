@@ -15,8 +15,9 @@ import {
   FileText
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
- 
+import { useUser } from '../../context/UserContext'; 
+import { label } from 'three/tsl';
+
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState({});
@@ -93,12 +94,6 @@ const Sidebar = () => {
     },
  
     {
-      label: "Mes interventions",
-      icon: CalendarCheck,
-      path: "/client-mes-interventions",
-    },
-   
-    {
       label: "Réclamations",
       icon: AlertCircle,
       children: [
@@ -156,8 +151,14 @@ const Sidebar = () => {
       { label: "Tableaux de bord", icon: LayoutGrid, path: "/dashboard-technicien" },
       { label: "Equipements", icon: CalendarCheck, path: "/equipements" },
       { label: "Mes interventions", icon: Server, path: "/technicien-interventions" },
-      { label: "Mes plan d'action", icon: CalendarCheck, path: "/MesEntretiens" },
-      
+      { label: "Mes plan d'action", 
+        icon: CalendarCheck, 
+        children: [
+          { label: "Rappel Entretien", path: "/MesEntretiens"},
+          { label: "Liste Entretien", path: "/liste-entretien-technicien"},
+        ]
+      },
+      { label: "Equipements", icon: CalendarCheck, path: "/equipement" },
 
       {
         label: "Rapport Technique",
@@ -236,5 +237,3 @@ const Sidebar = () => {
 };
  
 export default Sidebar;
- 
- 
