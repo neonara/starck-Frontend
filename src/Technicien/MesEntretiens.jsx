@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ApiService from "../../../Api/Api";
+import ApiService from "../Api/Api";
 import RappelForm from "./RappelForm";
 export default function MesEntretiens() {
   const [entretiens, setEntretiens] = useState([]);
