@@ -161,7 +161,16 @@ getStatistiquesAlarmesglobale: () => api.get(`alarme/stats/`),
     deleteExport: (id) => api.delete(`historique/supprimer/${id}/`),
     creerExportGlobalUtilisateurs: (params) =>
       api.post("historique/export-utilisateurs/", params),
-   
+
+
+exportInterventions: (data) => api.post("historique/exports/interventions/", data),
+  exportEntretiens: (format) =>
+    api.post("/historique/exports/entretiens/", { format }),
+  exportReclamations: (format) => api.post("historique/export/reclamations/", { format }),
+exportInstallationsGlobal: (format = "csv") =>
+  api.post("historique/export-global/", { format }),
+
+
   },
 
 
@@ -191,14 +200,9 @@ exportInterventionsCSV: (params = {}) =>
     responseType: 'blob'
   }),
 
-exportInterventionsXLSX: (params = {}) =>
-  api.get("intervention/interventions/export/xlsx/", {
-    params,
-    responseType: 'blob'
-  }),
-//exportInterventionsCSV: (params = {}) =>api.get("intervention/interventions/export/csv/", {params,responseType: 'blob'}),
+exportEquipements: (format = "csv") =>
+  api.post("historique/export-equipements/", { format }),
 
-//exportInterventionsXLSX: (params = {}) =>api.get("intervention/interventions/export/xlsx/", {params,responseType: 'blob'}),
 
 
 
@@ -229,10 +233,22 @@ getEntretienDetail: (id) => {
 
 getMesEntretiens7Jours: () => api.get("entretien/mes-entretiens-7-jours/"),
 
+
+getActivitesMensuellesTechnicien: () => {
+  return api.get("entretien/dashboard/technicien/activites-mensuelles/");
+},
 //Reclamation
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
-updateReclamation: (id, data) => api.put(`reclamation/reclamations/${id}/`, data),
-envoyerReclamation: (data) => api.post("reclamation/reclamations/envoyer/", data),
+updateReclamation: (id, data) =>
+  api.put(`reclamation/reclamations/${id}/`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }),
+envoyerReclamation: (data) =>
+  api.post("reclamation/reclamations/envoyer/", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  }),
 getMesReclamations: () => api.get("reclamation/mes-reclamations/"),
 deleteReclamation: (id) => api.delete(`reclamation/reclamations/${id}/supprimer/`),
 
@@ -308,7 +324,6 @@ getCalendarEntretiensInstallateur: (params) => api.get("entretien/entretiens/cal
 getAlarmesInstallateur: () => api.get("alarme/liste/installateur/"),
 getReclamationsInstallateur: () =>api.get("reclamation/reclamations/installateur/"),
 
-//getInstallationsByInstallateur: () =>api.get("installations/mes-installations/"),
 getStatistiquesInstallateurProduction: () => api.get("production/statistiques-installateur/"),
 
 //equipement

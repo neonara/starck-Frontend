@@ -73,7 +73,6 @@ import RapportProductionClientPage from "./components/Rapports/RapportProduction
 import RapportConsommationClientPage from "./components/Rapports/RapportConsommationClientPage";
 import RapportAlarmesClientPage from "./components/Rapports/RapportAlarmesClientPage";
 //Technicien 
-import MesEntretiens from "./components/Utilisateurs/Technicien/MesEntretiens";
 import ListeInterventionsClient from "./components/Intervention/ListeInterventionsClient";
 import DetailleInterventionClient from "./components/Intervention/DetailleInterventionClient";
 import ListEntretienTechnicien from "./Technicien/ListEntretienTechnicien.jsx";

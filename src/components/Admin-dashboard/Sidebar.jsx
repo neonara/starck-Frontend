@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext'; 
-import { label } from 'three/tsl';
+//import { label } from 'three/tsl';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -158,7 +158,6 @@ const Sidebar = () => {
           { label: "Liste Entretien", path: "/liste-entretien-technicien"},
         ]
       },
-      { label: "Equipements", icon: CalendarCheck, path: "/equipement" },
 
       {
         label: "Rapport Technique",
@@ -186,7 +185,7 @@ const Sidebar = () => {
       </div>
       <div className="pt-6 px-2">
         <ul className="space-y-2">
-          {menuItems.map(({ label, path, children }) => (
+          {menuItems.map(({  label, path, children, icon: Icon }) => (
             <li key={label}>
               {children ? (
                 <>
