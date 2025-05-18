@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from "react";
-import ApiService from "../../Api/Api";
+import ApiService from "../Api/Api";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import frLocale from "@fullcalendar/core/locales/fr";
 import toast from "react-hot-toast";
-//import "@fullcalendar/daygrid/main.css";
-//import "@fullcalendar/timegrid/main.css";
 
 const statusColors = {
-  planifie: "#3b82f6",     // Bleu
-  en_cours: "#facc15",     // Jaune
-  termine: "#22c55e",      // Vert
-  annule: "#ef4444"        // Rouge
+  planifie: "#3b82f6",
+  en_cours: "#facc15",
+  termine: "#22c55e",
+  annule: "#ef4444",
 };
 
-const CalendrierEntretiens = () => {
+const CalendrierEntretiensTechnicien = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const now = new Date();
-
       try {
-        const res = await ApiService.getEntretienCalendar();
+        const res = await ApiService.getEntretienCalendarTechnicien();
         const formatted = res.data.map((e) => ({
           id: e.id,
-          title: `${e.title}`,
+          title: e.title,
           start: e.start,
           end: e.end,
           backgroundColor: statusColors[e.status] || "#60a5fa",
@@ -54,10 +50,9 @@ const CalendrierEntretiens = () => {
       <div className="rounded-lg bg-white shadow border border-gray-200 p-4">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-semibold text-gray-800 flex items-center">
-            📆 Calendrier des entretiens
+            📅 Mon calendrier d’entretiens
           </h2>
         </div>
-
 
 
         <FullCalendar
@@ -80,8 +75,8 @@ const CalendrierEntretiens = () => {
           eventMouseEnter={(info) => {
             const tooltip = document.createElement("div");
             tooltip.innerHTML = `
-            <div style="font-weight: 600;color: #444; margin-bottom: 4px;">${info.event.title}</div>
-            <div style="font-size: 0.85rem; color: #444;">Technicien : ${info.event.extendedProps.technicien || "Non assigné"}</div>`;
+              <div style="font-weight: 600;color: #444; margin-bottom: 4px;">${info.event.title}</div>
+              <div style="font-size: 0.85rem; color: #444;">Statut : ${info.event.extendedProps.statut}</div>`;
             tooltip.style.position = "absolute";
             tooltip.style.zIndex = "1000";
             tooltip.style.background = "#fff";
@@ -104,7 +99,6 @@ const CalendrierEntretiens = () => {
         />
       </div>
 
-      {/* Styles custom Google-like */}
       <style>{`
         .fc .fc-button {
           background-color: #1a73e8;
@@ -137,4 +131,4 @@ const CalendrierEntretiens = () => {
   );
 };
 
-export default CalendrierEntretiens;
+export default CalendrierEntretiensTechnicien;

@@ -11,6 +11,7 @@ import { FaEdit, FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ModalModifierStatutEntretien from "../Technicien/ModalModifierStatutEntretien";
+import RappelForm from "../Technicien/RappelForm";
 
 const statutColors = {
   planifie: "bg-yellow-100 text-yellow-700",
@@ -27,6 +28,8 @@ const ListeEntretiensTechnicien = () => {
   const [statutFilter, setStatutFilter] = useState("");
   const [periodeFilter, setPeriodeFilter] = useState("tous");
   const [selectedEntretien, setSelectedEntretien] = useState(null);
+  const [showRappelForm, setShowRappelForm] = useState(false);
+  const [entretienRappelId, setEntretienRappelId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -107,17 +110,6 @@ const ListeEntretiensTechnicien = () => {
         <span className={`px-2 py-1 rounded text-xs font-medium ${statutColors[info.getValue()] || "bg-gray-100 text-gray-700"}`}>
           {info.getValue()}
         </span>
-      ),
-    },
-    {
-      header: "Actions",
-      cell: ({ row }) => (
-        <button
-          className="text-blue-600 hover:text-blue-800"
-          onClick={() => setSelectedEntretien(row.original)}
-        >
-          <FaEdit />
-        </button>
       ),
     },
   ], []);
@@ -219,6 +211,10 @@ const ListeEntretiensTechnicien = () => {
                 <tr
                   key={row.id}
                   className="hover:bg-gray-100 cursor-pointer"
+                  onClick={() => {
+                    setEntretienRappelId(row.original.id);
+                    setShowRappelForm(true);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-2 whitespace-nowrap">
@@ -231,6 +227,30 @@ const ListeEntretiensTechnicien = () => {
           </table>
         </div>
       </div>
+
+      {showRappelForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+              onClick={() => {
+                setShowRappelForm(false);
+                setEntretienRappelId(null);
+              }}
+            >
+              &times;
+            </button>
+            <RappelForm
+              entretienId={entretienRappelId}
+              onSuccess={() => {
+                toast.success("Rappel ajouté !");
+                setShowRappelForm(false);
+                setEntretienRappelId(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

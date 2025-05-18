@@ -47,7 +47,7 @@ const ListeEntretiensPage = () => {
         if (installationFilter) params.installation_id = installationFilter;
  
         const res = await ApiService.getAllEntretiens(params);
-        setData(res.data);
+        setData(res.data.results || res.data);
       } catch (err) {
         console.error("Erreur chargement entretiens", err);
         toast.error("Erreur de chargement ❌");
@@ -76,8 +76,8 @@ const ListeEntretiensPage = () => {
   const columns = useMemo(() => [
     {
       header: "Installation",
-      accessorKey: "installation_details.nom",
-      cell: (info) => info.row.original.installation_details?.nom || "—",
+      accessorKey: "installation_nom",
+      cell: (info) => info.getValue() || "—",
     },
     {
       header: "Type",

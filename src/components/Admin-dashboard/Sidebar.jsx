@@ -16,7 +16,6 @@ import {
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext'; 
-import { label } from 'three/tsl';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -55,7 +54,6 @@ const Sidebar = () => {
     { label: "Plan d'action", icon: CalendarCheck, children: [
         { label: "Liste des Entretiens", path: "/liste-entretiens" },
         { label: "Calendrier des Entretiens", path: "/calendrier-entretiens" },
-        { label: "Statistiques des Entretiens", path: "/statistiques-entretiens" },
       ]
     },
     { label: "Reclamations", icon:StickyNote, children: [
@@ -91,11 +89,15 @@ const Sidebar = () => {
       icon: LayoutGrid,
       path: "/client-mes-interventions",
     },
-    {
+        {
       label: "Mes plan d'action",
       icon: LayoutGrid,
-      path: "/client/mes-entretien",
+      children: [
+        { label: "Mes Entretien", path: "/client/mes-entretien" },
+        { label: "Calendrie Entretien", path: "/client/clanddar" },
+      ]
     },
+
  
     {
       label: "Réclamations",
@@ -153,12 +155,12 @@ const Sidebar = () => {
     // Menu Technicien
     const technicienMenuItems = [
       { label: "Tableaux de bord", icon: LayoutGrid, path: "/dashboard-technicien" },
-      { label: "Mes interventions", icon: Server, path: "/technicien-interventions" },
+      { label: "Mes interventions", icon: Server, path: "/liste-intervention-technicien" },
       { label: "Mes plan d'action", 
         icon: CalendarCheck, 
         children: [
-          { label: "Rappel Entretien", path: "/MesEntretiens"},
           { label: "Liste Entretien", path: "/liste-entretien-technicien"},
+          { label: "Calendrie Entretien", path: "/technicien/calendrier"},
         ]
       },
       { label: "Equipements", icon: CalendarCheck, path: "/equipement" },
@@ -167,8 +169,7 @@ const Sidebar = () => {
         label: "Rapport Technique",
         icon: BarChart3,
         children: [
-          { label: "Rapports interventions", path: "/rapports-interventions-technicien" },
-          { label: "Documents techniques", path: "/docs-techniques-technicien" }
+          { label: "Documents techniques", path: "/technicien/rapport" }
         ]
       },
     ];
