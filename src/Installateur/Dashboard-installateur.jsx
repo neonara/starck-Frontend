@@ -14,7 +14,7 @@ const DashboardInstallateur = () => {
       try {
         const [resInstall, resAlarmes, resProd] = await Promise.all([
           ApiService.getInstallationStats(),
-          ApiService.getStatistiquesAlarmesInstallateur(),
+          ApiService.getAlarmesInstallateur(),
           ApiService.getStatistiquesInstallateurProduction()
         ]);
         setInstallStats(resInstall.data);
@@ -68,27 +68,32 @@ const DashboardInstallateur = () => {
       {/* Cartes donuts */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card title="État des Installations" color="blue">
-          <ReactApexChart
-            type="donut"
-            series={[
-              installStats.total_normales || 0,
-              installStats.total_en_panne || 0
-            ]}
-            options={{
-              labels: ['Fonctionnelles', 'En panne'],
-              colors: ['#10b981', '#ef4444'],
-              legend: { position: 'bottom' },
-              dataLabels: { enabled: true },
-              plotOptions: { pie: { donut: { size: '70%' } } },
-              tooltip: {
-                y: { formatter: (val) => `${val} installations` }
-              }
-            }}
-            height={250}
-          />
+         {installStats && (
+  <ReactApexChart
+    type="donut"
+    series={[
+      installStats.total_normales || 0,
+      installStats.total_en_panne || 0
+    ]}
+    options={{
+      labels: ['Fonctionnelles', 'En panne'],
+      colors: ["#60a5fa", "#ef4444"],
+      legend: { position: 'bottom' },
+      dataLabels: { enabled: true },
+      plotOptions: { pie: { donut: { size: '70%' } } },
+      tooltip: {
+        y: { formatter: (val) => `${val} installations` }
+      }
+    }}
+    height={250}
+  />
+)}
+
         </Card>
 
         <Card title="Alarmes Actives" color="red">
+          {alarmStats && (
+
           <ReactApexChart
             type="donut"
             series={[
@@ -108,6 +113,8 @@ const DashboardInstallateur = () => {
             }}
             height={250}
           />
+          )}
+
         </Card>
       </div>
 

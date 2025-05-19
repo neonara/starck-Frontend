@@ -107,6 +107,10 @@ getInstallationStats: () => api.get("installations/statistiques/"),
       }),
 
 
+    
+    //updateInstallation: (id, data) => api.put(`installations/modifier-installation/${id}/`, data),
+    //getInstallationStats: () => api.get("installations/statistiques/"),
+
     getInstallationsGeoData: () => api.get("installations/geodata/"),
 
   // Notifications
@@ -157,7 +161,16 @@ getStatistiquesAlarmesglobale: () => api.get(`alarme/stats/`),
     deleteExport: (id) => api.delete(`historique/supprimer/${id}/`),
     creerExportGlobalUtilisateurs: (params) =>
       api.post("historique/export-utilisateurs/", params),
-   
+
+
+exportInterventions: (data) => api.post("historique/exports/interventions/", data),
+  exportEntretiens: (format) =>
+    api.post("/historique/exports/entretiens/", { format }),
+  exportReclamations: (format) => api.post("historique/export/reclamations/", { format }),
+exportInstallationsGlobal: (format = "csv") =>
+  api.post("historique/export-global/", { format }),
+
+
   },
 
 
@@ -187,6 +200,8 @@ exportInterventionsCSV: (params = {}) =>
     responseType: 'blob'
   }),
 
+exportEquipements: (format = "csv") =>
+  api.post("historique/export-equipements/", { format }),
 exportInterventionsXLSX: (params = {}) =>
   api.get("intervention/interventions/export/xlsx/", {
     params,
@@ -211,7 +226,6 @@ changeInterventionStatusTechnicien: (id, statut) => {
 
 //exportInterventionsCSV: (params = {}) =>api.get("intervention/interventions/export/csv/", {params,responseType: 'blob'}),
 
-//exportInterventionsXLSX: (params = {}) =>api.get("intervention/interventions/export/xlsx/", {params,responseType: 'blob'}),
 
 
 
@@ -223,6 +237,7 @@ updateEntretien: (id, data) => api.put(`entretien/entretiens/${id}/`, data),
 deleteEntretien: (id) => api.delete(`entretien/entretiens/${id}/`),
 getEntretienCalendar: (params) => api.get("entretien/entretiens/calendar/", { params }),
 getEntretienStats: () => api.get("entretien/entretien/statistiques/"),
+
 getEntretienCalendarClient: () => api.get("entretien/calendar/client/"),
 
 //technicien
@@ -243,10 +258,15 @@ getEntretienDetail: (id) => {
   return api.get(`entretien/client/entretiens/${id}/`);
 },
 
+getMesEntretiens7Jours: () => api.get("entretien/mes-entretiens-7-jours/"),
+
 //getEntretiensClient: () => {return api.get("entretien/client/entretiens/");},
 //getEntretienDetail: (id) => {return api.get(`entretien/client/entretiens/${id}/`);},
 
 
+getActivitesMensuellesTechnicien: () => {
+  return api.get("entretien/dashboard/technicien/activites-mensuelles/");
+},
 //Reclamation
 getReclamations: (params = {}) => api.get("reclamation/reclamations/", { params }),
 updateReclamation: (id, data) =>
@@ -260,8 +280,8 @@ envoyerReclamation: (data) =>
     headers: { "Content-Type": "multipart/form-data" },
   }),
 getMesReclamations: () => api.get("reclamation/mes-reclamations/"),
-
 deleteReclamation: (id) => api.delete(`reclamation/reclamations/${id}/supprimer/`),
+
 
 
 //client
@@ -348,9 +368,7 @@ getMesEntretiensInstallateur: () => api.get("entretien/entretiens/mes-entretiens
 getCalendarEntretiensInstallateur: (params) => api.get("entretien/entretiens/calendar-installateur/", { params }),
 getAlarmesInstallateur: () => api.get("alarme/liste/installateur/"),
 getReclamationsInstallateur: () =>api.get("reclamation/reclamations/installateur/"),
-getStatistiquesAlarmesInstallateur: () =>api.get("alarme/statistiques-installateur/"),
 
-//getInstallationsByInstallateur: () =>api.get("installations/mes-installations/"),
 getStatistiquesInstallateurProduction: () => api.get("production/statistiques-installateur/"),
 
 //equipement

@@ -14,11 +14,11 @@ export default function MesEntretiens() {
 
   return (
     <div className="space-y-6 p-6">
-      <h1 className="text-2xl font-bold text-gray-700 mb-4">🛠️ Mes entretiens</h1>
+      <h1 className="text-2xl font-bold mb-4">🛠️ Mes entretiens</h1>
 
       {entretiens.map((e) => (
-        <div key={e.id} className="border text-gray-700 p-4 rounded shadow">
-          <h2 className="font-semibold text-gray-700 text-lg">{e.installation_details.nom}</h2>
+        <div key={e.id} className="border p-4 rounded shadow">
+          <h2 className="font-semibold text-lg">{e.installation_details.nom}</h2>
           <p>Type : {e.type_entretien}</p>
           <p>Date : {new Date(e.date_debut).toLocaleString()}</p>
 

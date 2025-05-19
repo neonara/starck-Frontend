@@ -16,19 +16,20 @@ import {
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext'; 
+//import { label } from 'three/tsl';
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [openMenus, setOpenMenus] = useState({});
   const location = useLocation();
-  const { role: userRole } = useUser(); 
-
+  const { role: userRole } = useUser();
+ 
   if (!userRole) return null;
-
+ 
   const toggleMenu = (label) => {
     setOpenMenus((prev) => ({ ...prev, [label]: !prev[label] }));
   };
-
+ 
   //  Menu Admin
   const adminMenuItems = [
     { label: "Tableaux de bord", icon: LayoutGrid, path: "/admin-dashboard" },
@@ -63,13 +64,13 @@ const Sidebar = () => {
     { label: "Rapports", icon: FileText, children: [
         { label: "Rapport de production", path: "/rapport_production" },
         { label: "Rapport de consommation", path: "/rapport_consommation" },
-
+ 
         { label: "Rapports d’historique des alarmes", path: "/rapport_alarme" },
-
+ 
       ]
     },
   ];
-
+ 
   // Menu Client
   const clientMenuItems = [
     {
@@ -89,7 +90,9 @@ const Sidebar = () => {
       icon: LayoutGrid,
       path: "/client-mes-interventions",
     },
-        {
+      
+   
+    {
       label: "Mes plan d'action",
       icon: LayoutGrid,
       children: [
@@ -117,8 +120,8 @@ const Sidebar = () => {
       ],
     },
   ];
-    
-
+   
+ 
   // Menu Installateur
   const installateurMenuItems = [
     { label: "Tableaux de bord", icon: LayoutGrid, path: "/DashboardInstallateur" },
@@ -131,10 +134,10 @@ const Sidebar = () => {
          { label: "Equipements", path: "/equipements" },
       ]
     },
-    { label: "Gestion des Entretiens", icon: CalendarCheck, children: [
+    { label: "Plan d'action", icon: CalendarCheck, children: [
         { label: "Liste des Entretiens", path: "/MesEntrentientinstallateur" },
         { label: "Calendrier des Entretiens", path: "/Calendrier-En-Insta" },
-
+ 
       ]
     },
     { label: "Gestion des interventions", icon: Wrench, children: [
@@ -155,6 +158,8 @@ const Sidebar = () => {
     // Menu Technicien
     const technicienMenuItems = [
       { label: "Tableaux de bord", icon: LayoutGrid, path: "/dashboard-technicien" },
+      { label: "Equipements", icon: CalendarCheck, path: "/equipements" },
+      { label: "Mes interventions", icon: Server, path: "/technicien-interventions" },
       { label: "Mes interventions", icon: Server, path: "/liste-intervention-technicien" },
       { label: "Mes plan d'action", 
         icon: CalendarCheck, 
@@ -163,7 +168,6 @@ const Sidebar = () => {
           { label: "Calendrie Entretien", path: "/technicien/calendrier"},
         ]
       },
-      { label: "Equipements", icon: CalendarCheck, path: "/equipement" },
 
       {
         label: "Rapport Technique",
@@ -190,7 +194,7 @@ const Sidebar = () => {
       </div>
       <div className="pt-6 px-2">
         <ul className="space-y-2">
-          {menuItems.map(({ label, icon: Icon, path, children }) => (
+          {menuItems.map(({  label, path, children, icon: Icon }) => (
             <li key={label}>
               {children ? (
                 <>
@@ -239,5 +243,5 @@ const Sidebar = () => {
     </div>
   );
 };
-
+ 
 export default Sidebar;
