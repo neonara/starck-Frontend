@@ -30,7 +30,6 @@ import ListeClientsPage from "./components/Utilisateurs/Clients/Liste-Client";
 import ModifierClientPage from "./components/Utilisateurs/Clients/modifier-client";
 import CalendrierEntretiensClient from "./components/Entretien/CalendrierEntretiensClient.jsx";
 
-import CalendrierEntretiensClient from "./components/Entretien/CalendrierEntretiensClient.jsx";
 
 //notifications
 import NotificationsPage from "./components/notifications/notifications";
@@ -57,10 +56,6 @@ import ListeEntretiensClient from "./components/Entretien/ListeEntretiensClient.
 import DetailleEntretienClient from "./components/Entretien/DetailleEntretienClient.jsx";
 
 
-//import ListeEntretiensClient from "./components/Entretien/ListeEntretiensClient.jsx";
-//import DetailleEntretienClient from "./components/Entretien/DetailleEntretienClient.jsx";
-//import ListeEntretiensClient from "./components/Entretien/ListeEntretiensClient.jsx";
-//import DetailleEntretienClient from "./components/Entretien/DetailleEntretienClient.jsx";
  
 //Reclamations
 import ListeReclamationsPage from "./components/Reclamation/ListeReclamationPage";
@@ -89,17 +84,7 @@ import CalendrierEntretiensTechnicien from"./Technicien/CalendrierEntretiensTech
 import ListeInterventionsTechnicien from "./Technicien/ListeInterventionsTechnicien.jsx";
 import ModalModifierStatutIntervention from "./Technicien/ModalModifierStatutIntervention.jsx";
 import RapportTechniqueTechnicien from "./Technicien/RapportTechniqueTechnicien.jsx";
-//Technicien 
-//import MesEntretiens from "./Technicien/MesEntretiens";
-//import DashboardTechnicien from "./Technicien/DashboardTechnicien.jsx";
 
-import CalendrierEntretiensTechnicien from"./Technicien/CalendrierEntretiensTechnicien.jsx";
-import ListeInterventionsTechnicien from "./Technicien/ListeInterventionsTechnicien.jsx";
-import ModalModifierStatutIntervention from "./Technicien/ModalModifierStatutIntervention.jsx";
-import RapportTechniqueTechnicien from "./Technicien/RapportTechniqueTechnicien.jsx";
-//Technicien 
-//import MesEntretiens from "./Technicien/MesEntretiens";
-//import DashboardTechnicien from "./Technicien/DashboardTechnicien.jsx";
 
 //Installateur
 import ListeUtilisateursPage from "./Installateur/ListeUtilisateursPage";
