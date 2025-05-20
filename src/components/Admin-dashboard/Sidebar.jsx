@@ -55,7 +55,6 @@ const Sidebar = () => {
     { label: "Plan d'action", icon: CalendarCheck, children: [
         { label: "Liste des Entretiens", path: "/liste-entretiens" },
         { label: "Calendrier des Entretiens", path: "/calendrier-entretiens" },
-        { label: "Statistiques des Entretiens", path: "/statistiques-entretiens" },
       ]
     },
     { label: "Reclamations", icon:StickyNote, children: [
@@ -81,18 +80,27 @@ const Sidebar = () => {
     },
   
      { label: "Gestion d'installation", icon: Server, children: [
-        { label: "Mon installation", path: "/client-dashboard" },
          { label: "Mes Equipements", path: "/client/equipements" },
       ]
     },
   
+    {
+      label: "Mes interventios",
+      icon: LayoutGrid,
+      path: "/client-mes-interventions",
+    },
+      
    
     {
       label: "Mes plan d'action",
       icon: LayoutGrid,
-      path: "/client/mes-entretien",
+      children: [
+        { label: "Mes Entretien", path: "/client/mes-entretien" },
+        { label: "Calendrie Entretien", path: "/client/clanddar" },
+      ]
     },
- 
+
+   
     {
       label: "Réclamations",
       icon: AlertCircle,
@@ -150,12 +158,12 @@ const Sidebar = () => {
     const technicienMenuItems = [
       { label: "Tableaux de bord", icon: LayoutGrid, path: "/dashboard-technicien" },
       { label: "Equipements", icon: CalendarCheck, path: "/equipements" },
-      { label: "Mes interventions", icon: Server, path: "/technicien-interventions" },
+      { label: "Mes interventions", icon: Server, path: "/liste-intervention-technicien" },
       { label: "Mes plan d'action", 
         icon: CalendarCheck, 
         children: [
-          { label: "Rappel Entretien", path: "/MesEntretiens"},
           { label: "Liste Entretien", path: "/liste-entretien-technicien"},
+          { label: "Calendrie Entretien", path: "/technicien/calendrier"},
         ]
       },
 
@@ -163,8 +171,7 @@ const Sidebar = () => {
         label: "Rapport Technique",
         icon: BarChart3,
         children: [
-          { label: "Rapports interventions", path: "/rapports-interventions-technicien" },
-          { label: "Documents techniques", path: "/docs-techniques-technicien" }
+          { label: "Documents techniques", path: "/technicien/rapport" }
         ]
       },
     ];
