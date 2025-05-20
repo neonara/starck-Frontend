@@ -221,6 +221,29 @@ const ListeInterventionsTechnicien = () => {
               ))}
             </tbody>
           </table>
+
+          {/* Pagination */}
+          <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
+            <div>
+              Page {table.getState().pagination.pageIndex + 1} sur {table.getPageCount()}
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Précédent
+              </button>
+              <button
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Suivant
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

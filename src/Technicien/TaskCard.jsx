@@ -12,7 +12,7 @@ const TaskCard = ({ entretiensCount, interventionsCount, anomaliesCount }) => {
     {
       icon: <Wrench className="text-green-600 w-5 h-5" />,
       label: `${interventionsCount} interventions à valider`,
-      link: "/technicien-interventions",
+      link: "/liste-intervention-technicien",
     },
  
   ];

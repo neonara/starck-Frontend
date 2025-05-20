@@ -25,32 +25,57 @@ const ListeEntretiensClient = () => {
   const [statutFilter, setStatutFilter] = useState("");
   const [periodeFilter, setPeriodeFilter] = useState("tous");
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const res = await ApiService.getEntretiensClient();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await ApiService.getEntretiensClient();
 
-      let results = [];
-      if (Array.isArray(res.data)) {
-        results = res.data;
-      } else if (Array.isArray(res.data.results)) {
-        results = res.data.results;
-      } else {
-        throw new Error("Format inattendu");
+        let results = [];
+        if (Array.isArray(res.data)) {
+          results = res.data;
+        } else if (Array.isArray(res.data.results)) {
+          results = res.data.results;
+        } else {
+          throw new Error("Format inattendu");
+        }
+
+        const today = new Date();
+        const oneWeekAhead = new Date();
+        oneWeekAhead.setDate(today.getDate() + 7);
+        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+        const filtered = results.filter((item) => {
+          const matchType = typeFilter ? item.type === typeFilter : true;
+          const matchStatut = statutFilter ? item.statut === statutFilter : true;
+
+          const dateDebut = new Date(item.date_debut);
+          let matchPeriode = true;
+          if (periodeFilter === "jour") {
+            matchPeriode = dateDebut.toDateString() === today.toDateString();
+          } else if (periodeFilter === "semaine") {
+            matchPeriode = dateDebut >= today && dateDebut <= oneWeekAhead;
+          } else if (periodeFilter === "mois") {
+            matchPeriode = dateDebut >= today && dateDebut <= endOfMonth;
+          }
+
+          const matchGlobal = globalFilter
+            ? item.installation_nom?.toLowerCase().includes(globalFilter.toLowerCase()) ||
+              item.type_display?.toLowerCase().includes(globalFilter.toLowerCase()) ||
+              item.statut?.toLowerCase().includes(globalFilter.toLowerCase())
+            : true;
+
+          return matchType && matchStatut && matchPeriode && matchGlobal;
+        });
+
+        setData(filtered);
+      } catch (err) {
+        toast.error("Erreur de chargement des entretiens");
+        console.error(err);
       }
+    };
 
-      // ... filtres ici ...
-
-      setData(results);
-    } catch (err) {
-      toast.error("Erreur de chargement des entretiens");
-      console.error(err);
-    }
-  };
-
-  fetchData();
-}, [typeFilter, statutFilter, periodeFilter, globalFilter]);
-
+    fetchData();
+  }, [typeFilter, statutFilter, periodeFilter, globalFilter]);
 
   const columns = useMemo(() => [
     {
@@ -179,6 +204,29 @@ useEffect(() => {
               ))}
             </tbody>
           </table>
+
+          {/* Pagination */}
+          <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
+            <div>
+              Page {table.getState().pagination.pageIndex + 1} sur {table.getPageCount()}
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Précédent
+              </button>
+              <button
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Suivant
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -80,7 +80,6 @@ const Sidebar = () => {
     },
   
      { label: "Gestion d'installation", icon: Server, children: [
-        { label: "Mon installation", path: "/client-dashboard" },
          { label: "Mes Equipements", path: "/client/equipements" },
       ]
     },
@@ -101,7 +100,7 @@ const Sidebar = () => {
       ]
     },
 
- 
+   
     {
       label: "Réclamations",
       icon: AlertCircle,
@@ -159,7 +158,6 @@ const Sidebar = () => {
     const technicienMenuItems = [
       { label: "Tableaux de bord", icon: LayoutGrid, path: "/dashboard-technicien" },
       { label: "Equipements", icon: CalendarCheck, path: "/equipements" },
-      { label: "Mes interventions", icon: Server, path: "/technicien-interventions" },
       { label: "Mes interventions", icon: Server, path: "/liste-intervention-technicien" },
       { label: "Mes plan d'action", 
         icon: CalendarCheck, 
