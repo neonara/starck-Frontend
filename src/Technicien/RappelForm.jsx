@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ApiService from "../../../Api/Api";
+import ApiService from "../Api/Api";
 export default function RappelForm({ entretienId, onSuccess }) {
   const [datetime, setDatetime] = useState("");
   const [loading, setLoading] = useState(false);
