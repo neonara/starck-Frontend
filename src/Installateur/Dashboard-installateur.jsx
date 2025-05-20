@@ -19,6 +19,8 @@ const DashboardInstallateur = () => {
         ]);
         setInstallStats(resInstall.data);
         setAlarmStats(resAlarmes.data);
+        console.log("Alarm stats", resAlarmes.data);
+
         setProdStats(resProd.data);
       } catch (err) {
         console.error("Erreur récupération stats installateur", err);
@@ -96,11 +98,11 @@ const DashboardInstallateur = () => {
 
           <ReactApexChart
             type="donut"
-            series={[
-              alarmStats.critique || 0,
-              alarmStats.majeure || 0,
-              alarmStats.mineure || 0
-            ]}
+           series={[
+  Number(alarmStats?.critique || 0),
+  Number(alarmStats?.majeure || 0),
+  Number(alarmStats?.mineure || 0)
+]}
             options={{
               labels: ['Critiques', 'Majeures', 'Mineures'],
               colors: ['#ef4444', '#f59e0b', '#facc15'],
@@ -118,7 +120,6 @@ const DashboardInstallateur = () => {
         </Card>
       </div>
 
-      {/* Graphique de production */}
       <Card title="">
         <div className="bg-gradient-to-br from-white to-gray-50 p-6 rounded-xl shadow-md border">
           <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
