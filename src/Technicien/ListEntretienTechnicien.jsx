@@ -7,10 +7,11 @@ import {
   getSortedRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { FaEdit, FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
+import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ModalModifierStatutEntretien from "../Technicien/ModalModifierStatutEntretien";
+import RappelForm from "../Technicien/RappelForm";
 
 const statutColors = {
   planifie: "bg-yellow-100 text-yellow-700",
@@ -23,10 +24,12 @@ const ListeEntretiensTechnicien = () => {
   const [data, setData] = useState([]);
   const [pageSize, setPageSize] = useState(5);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
   const [statutFilter, setStatutFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
   const [periodeFilter, setPeriodeFilter] = useState("tous");
   const [selectedEntretien, setSelectedEntretien] = useState(null);
+  const [showRappelForm, setShowRappelForm] = useState(false);
+  const [entretienRappelId, setEntretienRappelId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -37,34 +40,32 @@ const ListeEntretiensTechnicien = () => {
         if (!Array.isArray(res.data)) throw new Error("Format inattendu");
 
         let results = res.data;
-
-        if (typeFilter) results = results.filter((e) => e.type_entretien === typeFilter);
-        if (statutFilter) results = results.filter((e) => e.statut === statutFilter);
-
         const now = new Date();
+
+        if (typeFilter) results = results.filter(e => e.type_entretien === typeFilter);
+        if (statutFilter) results = results.filter(e => e.statut === statutFilter);
+
         if (periodeFilter === "jour") {
-          results = results.filter((e) => new Date(e.date_debut).toDateString() === now.toDateString());
+          results = results.filter(e => new Date(e.date_debut).toDateString() === now.toDateString());
         } else if (periodeFilter === "semaine") {
-          const start = new Date();
+          const start = new Date(now);
           start.setDate(now.getDate() - now.getDay());
           const end = new Date(start);
           end.setDate(start.getDate() + 6);
-          results = results.filter((e) => {
+          results = results.filter(e => {
             const d = new Date(e.date_debut);
             return d >= start && d <= end;
           });
         } else if (periodeFilter === "mois") {
-          const month = now.getMonth();
-          const year = now.getFullYear();
-          results = results.filter((e) => {
+          results = results.filter(e => {
             const d = new Date(e.date_debut);
-            return d.getMonth() === month && d.getFullYear() === year;
+            return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
           });
         }
 
         if (globalFilter) {
           const search = globalFilter.toLowerCase();
-          results = results.filter((e) =>
+          results = results.filter(e =>
             e.installation_nom?.toLowerCase().includes(search) ||
             e.type_display?.toLowerCase().includes(search) ||
             e.statut?.toLowerCase().includes(search)
@@ -74,7 +75,6 @@ const ListeEntretiensTechnicien = () => {
         setData(results);
       } catch (err) {
         toast.error("Erreur de chargement des entretiens");
-        console.error(err);
       }
     };
 
@@ -93,31 +93,20 @@ const ListeEntretiensTechnicien = () => {
     {
       header: "Début",
       accessorKey: "date_debut",
-      cell: (info) => new Date(info.getValue()).toLocaleString(),
+      cell: info => new Date(info.getValue()).toLocaleString(),
     },
     {
       header: "Fin",
       accessorKey: "date_fin",
-      cell: (info) => new Date(info.getValue()).toLocaleString(),
+      cell: info => new Date(info.getValue()).toLocaleString(),
     },
     {
       header: "Statut",
       accessorKey: "statut",
-      cell: (info) => (
+      cell: info => (
         <span className={`px-2 py-1 rounded text-xs font-medium ${statutColors[info.getValue()] || "bg-gray-100 text-gray-700"}`}>
           {info.getValue()}
         </span>
-      ),
-    },
-    {
-      header: "Actions",
-      cell: ({ row }) => (
-        <button
-          className="text-blue-600 hover:text-blue-800"
-          onClick={() => setSelectedEntretien(row.original)}
-        >
-          <FaEdit />
-        </button>
       ),
     },
   ], []);
@@ -125,7 +114,7 @@ const ListeEntretiensTechnicien = () => {
   const table = useReactTable({
     data,
     columns,
-    initialState: { pagination: { pageSize } },
+    initialState: { pagination: { pageSize: pageSize } },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -138,21 +127,14 @@ const ListeEntretiensTechnicien = () => {
   return (
     <div className="pt-24 px-6 w-full">
       <Toaster />
-      {selectedEntretien && (
-        <ModalModifierStatutEntretien
-          entretien={selectedEntretien}
-          onClose={() => setSelectedEntretien(null)}
-          onRefresh={() => window.location.reload()}
-        />
-      )}
 
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
         <div className="flex gap-2 items-center">
           <label className="text-sm text-gray-600">Afficher</label>
           <select
             value={pageSize}
             onChange={(e) => setPageSize(Number(e.target.value))}
-            className="border rounded px-2 text-gray-700 py-1 text-sm"
+            className="border text-gray-500 rounded px-2 py-1 text-sm"
           >
             {[5, 10, 20].map((size) => (
               <option key={size} value={size}>{size}</option>
@@ -219,6 +201,10 @@ const ListeEntretiensTechnicien = () => {
                 <tr
                   key={row.id}
                   className="hover:bg-gray-100 cursor-pointer"
+                  onClick={() => {
+                    setEntretienRappelId(row.original.id);
+                    setShowRappelForm(true);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-2 whitespace-nowrap">
@@ -229,8 +215,55 @@ const ListeEntretiensTechnicien = () => {
               ))}
             </tbody>
           </table>
+
+          {/* Pagination */}
+          <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
+            <div>
+              Page {table.getState().pagination.pageIndex + 1} sur {table.getPageCount()}
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Précédent
+              </button>
+              <button
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+                className="px-3 py-1 border rounded disabled:opacity-50"
+              >
+                Suivant
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+
+      {showRappelForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl"
+              onClick={() => {
+                setShowRappelForm(false);
+                setEntretienRappelId(null);
+              }}
+            >
+              &times;
+            </button>
+            <RappelForm
+              entretienId={entretienRappelId}
+              onSuccess={() => {
+                toast.success("Rappel ajouté !");
+                setShowRappelForm(false);
+                setEntretienRappelId(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

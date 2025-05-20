@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import ApiService from "../../Api/Api";
+import ApiService from "../Api/Api";
 import {
   useReactTable,
   getCoreRowModel,
@@ -7,8 +7,9 @@ import {
   getSortedRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
+import { FaEdit, FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
+import ModalModifierStatutIntervention from "../Technicien/ModalModifierStatutIntervention";
 
 const statutColors = {
   en_attente: "bg-yellow-100 text-yellow-700",
@@ -17,44 +18,57 @@ const statutColors = {
   annulee: "bg-red-100 text-red-700",
 };
 
-const ListeInterventionsClient = () => {
+const ListeInterventionsTechnicien = () => {
   const [data, setData] = useState([]);
   const [pageSize, setPageSize] = useState(5);
   const [globalFilter, setGlobalFilter] = useState("");
   const [statutFilter, setStatutFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
+  const [installationFilter, setInstallationFilter] = useState("");
+  const [selectedIntervention, setSelectedIntervention] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const res = await ApiService.getInterventionsTechnicien();
+      const interventions = res.data.results || res.data;
+
+      let results = interventions;
+
+      if (globalFilter) {
+        const lower = globalFilter.toLowerCase();
+        results = results.filter((e) =>
+          e.installation_nom?.toLowerCase().includes(lower) ||
+          e.type_intervention?.toLowerCase().includes(lower) ||
+          e.statut?.toLowerCase().includes(lower)
+        );
+      }
+
+      if (statutFilter) {
+        results = results.filter((e) => e.statut === statutFilter);
+      }
+
+      if (typeFilter) {
+        results = results.filter((e) => e.type_intervention === typeFilter);
+      }
+
+      if (installationFilter) {
+        results = results.filter((e) => e.installation_nom === installationFilter);
+      }
+
+      setData(results);
+    } catch (err) {
+      toast.error("Erreur de chargement des interventions");
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await ApiService.getInterventionsClient();
-        let results = Array.isArray(res.data) ? res.data : res.data.results || [];
-
-        if (statutFilter) results = results.filter(i => i.statut === statutFilter);
-        if (typeFilter) results = results.filter(i => i.type_intervention === typeFilter);
-        if (globalFilter) {
-          const search = globalFilter.toLowerCase();
-          results = results.filter(i =>
-            i.installation_details?.nom?.toLowerCase().includes(search) ||
-            i.description?.toLowerCase().includes(search) ||
-            i.statut?.toLowerCase().includes(search)
-          );
-        }
-
-        setData(results);
-      } catch (err) {
-        toast.error("Erreur de chargement des interventions");
-      }
-    };
-
     fetchData();
-  }, [globalFilter, statutFilter, typeFilter]);
+  }, [globalFilter, statutFilter, typeFilter, installationFilter]);
 
   const columns = useMemo(() => [
     {
       header: "Installation",
-      accessorKey: "installation_details.nom",
-      cell: (info) => info.getValue() || "Non spécifiée",
+      accessorKey: "installation_nom",
     },
     {
       header: "Type",
@@ -75,9 +89,16 @@ const ListeInterventionsClient = () => {
       ),
     },
     {
-      header: "Description",
-      accessorKey: "description",
-      cell: (info) => info.getValue() || "-",
+      header: "Action",
+      cell: ({ row }) => (
+        <button
+          onClick={() => setSelectedIntervention(row.original)}
+          className="text-blue-600 hover:text-blue-800 text-lg"
+          title="Modifier le statut"
+        >
+          <FaEdit />
+        </button>
+      ),
     }
   ], []);
 
@@ -94,12 +115,22 @@ const ListeInterventionsClient = () => {
     table.setPageSize(pageSize);
   }, [pageSize]);
 
+  const uniqueInstallations = [...new Set(data.map((d) => d.installation_nom))];
+  const uniqueTypes = [...new Set(data.map((d) => d.type_intervention))];
+
   return (
     <div className="pt-24 px-6 w-full">
       <Toaster />
+      {selectedIntervention && (
+        <ModalModifierStatutIntervention
+          intervention={selectedIntervention}
+          onClose={() => setSelectedIntervention(null)}
+          onRefresh={fetchData}
+        />
+      )}
 
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
-        <div className="flex gap-2 items-center">
+      <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div className="flex items-center gap-2">
           <label className="text-sm text-gray-600">Afficher</label>
           <select
             value={pageSize}
@@ -112,15 +143,34 @@ const ListeInterventionsClient = () => {
           </select>
         </div>
 
-        <div className="flex flex-wrap gap-3 items-center">
-          <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="border rounded text-gray-600 px-2 py-1 text-sm">
+        <div className="flex gap-2 items-center flex-wrap">
+          <select
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="border px-2 py-1 rounded text-sm text-gray-700"
+          >
             <option value="">Tous les types</option>
-            <option value="preventif">Préventif</option>
-            <option value="correctif">Correctif</option>
-            <option value="diagnostic">Diagnostic</option>
+            {uniqueTypes.map((type, idx) => (
+              <option key={idx} value={type}>{type}</option>
+            ))}
           </select>
 
-          <select value={statutFilter} onChange={(e) => setStatutFilter(e.target.value)} className="border rounded text-gray-600 px-2 py-1 text-sm">
+          <select
+            value={installationFilter}
+            onChange={(e) => setInstallationFilter(e.target.value)}
+            className="border px-2 py-1 rounded text-sm text-gray-700"
+          >
+            <option value="">Toutes les installations</option>
+            {uniqueInstallations.map((nom, idx) => (
+              <option key={idx} value={nom}>{nom}</option>
+            ))}
+          </select>
+
+          <select
+            value={statutFilter}
+            onChange={(e) => setStatutFilter(e.target.value)}
+            className="border px-2 py-1 rounded text-sm text-gray-700"
+          >
             <option value="">Tous les statuts</option>
             <option value="en_attente">En attente</option>
             <option value="en_cours">En cours</option>
@@ -133,12 +183,12 @@ const ListeInterventionsClient = () => {
             placeholder="🔍 Rechercher..."
             value={globalFilter}
             onChange={(e) => setGlobalFilter(e.target.value)}
-            className="border px-3 py-1 rounded w-64 text-sm"
+            className="border px-3 py-1 rounded text-sm w-60"
           />
         </div>
       </div>
 
-      <div className="overflow-x-auto w-full mt-4">
+      <div className="overflow-x-auto w-full">
         <div className="bg-white rounded-xl shadow p-6 w-full">
           <table className="w-full table-auto text-sm text-left text-gray-800">
             <thead className="bg-gray-100 text-xs uppercase">
@@ -200,4 +250,4 @@ const ListeInterventionsClient = () => {
   );
 };
 
-export default ListeInterventionsClient;
+export default ListeInterventionsTechnicien;
