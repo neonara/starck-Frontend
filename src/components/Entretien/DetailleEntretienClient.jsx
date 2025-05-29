@@ -13,7 +13,7 @@ const DetailleEntretienClient = () => {
   useEffect(() => {
     const fetchEntretien = async () => {
       try {
-        const res = await ApiService.getEntretienDetail(id); // ⚠️ à ajouter dans ApiService
+        const res = await ApiService.getEntretienDetail(id); 
         setEntretien(res.data);
       } catch (error) {
         console.error("Erreur chargement détail entretien :", error);

@@ -109,6 +109,22 @@ const ListeEntretiensTechnicien = () => {
         </span>
       ),
     },
+    {
+      header: "Rappel",
+      id: "rappel",
+      cell: ({ row }) => (
+        <button
+          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-xs"
+          onClick={(e) => {
+            e.stopPropagation();
+            setEntretienRappelId(row.original.id);
+            setShowRappelForm(true);
+          }}
+        >
+          Rappel
+        </button>
+      )
+    }
   ], []);
 
   const table = useReactTable({
@@ -198,14 +214,7 @@ const ListeEntretiensTechnicien = () => {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="hover:bg-gray-100 cursor-pointer"
-                  onClick={() => {
-                    setEntretienRappelId(row.original.id);
-                    setShowRappelForm(true);
-                  }}
-                >
+                <tr key={row.id} className="hover:bg-gray-100">
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-2 whitespace-nowrap">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
