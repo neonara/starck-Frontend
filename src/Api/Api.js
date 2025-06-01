@@ -3,7 +3,10 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import dayjs from "dayjs";
 
-const baseURL = "http://localhost:8000/";
+const baseURL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8000"
+    : "http://django:8000";
 
 const getAccessToken = () => localStorage.getItem("accessToken") || "";
 const getRefreshToken = () => localStorage.getItem("refreshToken") || "";
