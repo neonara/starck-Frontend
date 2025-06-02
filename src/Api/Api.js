@@ -3,10 +3,8 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import dayjs from "dayjs";
 
-const baseURL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:8000"
-    : "http://django:8000";
+const baseURL = import.meta.env.VITE_API_URL;
+
 
 const getAccessToken = () => localStorage.getItem("accessToken") || "";
 const getRefreshToken = () => localStorage.getItem("refreshToken") || "";
