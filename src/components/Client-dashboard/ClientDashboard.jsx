@@ -129,12 +129,12 @@ const ClientDashboard = () => {
   État :
   <span
     className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-      data.etat_fonctionnement === "Fonctionnelle"
+      data.statut === "Active"
         ? "bg-green-100 text-green-600"
         : "bg-red-100 text-red-600"
     }`}
   >
-    {data.etat_fonctionnement}
+    {data.statut}
   </span>
 </p>
   </div>
